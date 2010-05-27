@@ -63,6 +63,17 @@ class Command(BaseCommand):
             pid_file = os.path.join("/tmp","inotifier.pid")
 
         # Daemonize, killing any existing process specified in pid file
-        notifier.loop(daemonize=True, pid_file=pid_file, force_kill=True)
+        daemon_kwargs = {}
+        try:
+            daemon_kwargs['stdout'] = settings.INOTIFIER_DAEMON_STDOUT
+        except AttirbuteError:
+            pass
+
+        try:
+            daemon_kwargs['stderr'] = settings.INOTIFIER_DAEMON_STDERR
+        except AttirbuteError:
+            pass
+
+        notifier.loop(daemonize=True, pid_file=pid_file, force_kill=True, **kwargs)
 
         print "File monitoring started"

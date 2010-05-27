@@ -28,3 +28,9 @@ def generate_watch_paths():
        ),
     )
 INOTIFIER_WATCH_PATHS = generate_watch_paths()
+
+# OPTIONAL. Leave undefined if unused
+INOTIFIER_DAEMON_STDOUT = os.path.join(PROJECT_PATH, 'inotifier_stdout.txt')
+
+# OPTIONAL. Leave undefined if unused
+INOTIFIER_DAEMON_STDERR = os.path.join(PROJECT_PATH, 'inotifier_stderr.txt')

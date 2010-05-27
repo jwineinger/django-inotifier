@@ -1,0 +1,8 @@
+django-inotify - a thin django wrapper around pyinotify
+
+Author: Jay Wineinger <jay.wineinger@gmail.com>
+
+This project provides a django app which is intended to be pluggable into any
+other project.  When configured and running, pyinotify is used to monitor a
+file or directory for changes. When changes are detected, a corresponding 
+django signal will be issued and can be handled by other apps.

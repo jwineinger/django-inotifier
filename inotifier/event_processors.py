@@ -56,3 +56,52 @@ class AllEventsSignaler(pyinotify.ProcessEvent):
 
     def process_IN_UNMOUNT(self, event):
         signals.in_unmount.send(sender=self, event=event)
+
+class AllEventsPrinter(pyinotify.ProcessEvent):
+    """
+    Simple class which prints on every event.
+    """
+    def process_IN_ACCESS(self, event):
+        print "IN ACCESS: %s" % event.pathname
+
+    def process_IN_ATTRIB(self, event):
+        print "IN ATTRIB: %s" % event.pathname
+
+    def process_IN_CLOSE_NOWRITE(self, event):
+        print "IN CLOSE NOWRITE: %s" % event.pathname
+
+    def process_IN_CLOSE_WRITE(self, event):
+        print "IN CLOSE WRITE: %s" % event.pathname
+
+    def process_IN_CREATE(self, event):
+        print "IN CREATE: %s" % event.pathname
+
+    def process_IN_DELETE(self, event):
+        print "IN DELETE: %s" % event.pathname
+
+    def process_IN_DELETE_SELF(self, event):
+        print "IN DELETE SELF: %s" % event.pathname
+
+    def process_IN_IGNORED(self, event):
+        print "IN IGNORED: %s" % event.pathname
+
+    def process_IN_MODIFY(self, event):
+        print "IN MODIFY: %s" % event.pathname
+
+    def process_IN_MOVE_SELF(self, event):
+        print "IN MOVE SELF: %s" % event.pathname
+
+    def process_IN_MOVED_FROM(self, event):
+        print "IN MOVED FROM: %s" % event.pathname
+
+    def process_IN_MOVED_TO(self, event):
+        print "IN MOVED TO: %s" % event.pathname
+
+    def process_IN_OPEN(self, event):
+        print "IN OPEN: %s" % event.pathname
+
+    def process_IN_Q_OVERFLOW(self, event):
+        print "IN Q OVERFLOW: %s" % event.pathname
+
+    def process_IN_UNMOUNT(self, event):
+        print "IN UNMOUNT: %s" % event.pathname

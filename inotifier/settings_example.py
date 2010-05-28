@@ -1,4 +1,6 @@
-# First, get the directory which settinsg.py is in. Used in the example below
+# The first step is to add 'inotifier' to INSTALLED_APPS
+
+# Next, get the directory which settinsg.py is in. Used in the example below
 # but also optionally used in the 'inotifier_start' and 'inotifier_stop'
 # management commands to calculate pid file location.  If PROJECT_PATH is not
 # set, then /tmp will be assumed for the pid file location.
@@ -34,3 +36,4 @@ INOTIFIER_DAEMON_STDOUT = os.path.join(PROJECT_PATH, 'inotifier_stdout.txt')
 
 # OPTIONAL. Leave undefined if unused
 INOTIFIER_DAEMON_STDERR = os.path.join(PROJECT_PATH, 'inotifier_stderr.txt')
+

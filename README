@@ -1,4 +1,4 @@
-django-inotify - a thin django wrapper around pyinotify
+django-inotifier - a thin django wrapper around pyinotify
 
 Author: Jay Wineinger <jay.wineinger@gmail.com>
 
@@ -6,3 +6,48 @@ This project provides a django app which is intended to be pluggable into any
 other project.  When configured and running, pyinotify is used to monitor a
 file or directory for changes. When changes are detected, a corresponding 
 django signal will be issued and can be handled by other apps.
+
+1) Quickstart
+
+    1.1) Install the inotifier application
+
+    1.2) Add inotifier to INSTALLED_APPS
+
+    1.3) Define settings in project settings.py
+
+        1.3.1) INOTIFIER_WATCH_PATHS
+            -required
+            -An iterable of 3-tuples:
+                ('/path/to/monitor', <pyinotify event mask>, '<event processor class>')
+            -see example in inotifier/settings_example.py
+        1.3.2) INOTIFIER_DAEMON_STDOUT
+            -optional
+            -A string path to a file which will be used as stdout for the pyinotify daemon
+        1.3.3) INOTIFIER_DAEMON_STDERR 
+            -optional
+            -A string path to a file which will be used as stderr for the pyinotify daemon
+        1.3.4) PROJECT_PATH
+            -optional
+            -The path to the main project directory. Used to generate location for the 
+             daemon pid file.  If not set, pid file will be put into /tmp.
+
+    1.4) Start pyinotify daemon
+        ./manage.py inotifier_start
+
+    1.5) Stop pyinotify daemon
+        -Obviously, only do this when you want to stop monitoring
+        ./manage.py inotifier_stop
+
+2) Defining your own event processor class
+
+    2.1) See event_processors.py in the inotifier app directory. There are a number of simple 
+    event processors there, plus a more complex one (CreateViaChunksSignaler).
+    
+    2.2) See the documentation for the pyinotify project on how to write an event processor.
+
+3) FAQ
+
+    3.1) Q: How do I use this on <insert non-linux OS>?
+         A: You can't.  inotify is a linux specific feature. Thus, pyinotify and this project
+            will only work on linux.
+

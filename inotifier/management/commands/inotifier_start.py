@@ -74,6 +74,6 @@ class Command(BaseCommand):
         except AttirbuteError:
             pass
 
-        notifier.loop(daemonize=True, pid_file=pid_file, force_kill=True, **kwargs)
+        notifier.loop(daemonize=True, pid_file=pid_file, force_kill=True, **daemon_kwargs)
 
         print "File monitoring started"

@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand, CommandError
 
+
 class Command(BaseCommand):
     help = 'Stops monitoring directories for file events'
 
@@ -11,7 +12,7 @@ class Command(BaseCommand):
             pid_file = os.path.join(settings.PROJECT_PATH, 'inotifier.pid')
         except AttributeError:
             pid_file = os.path.join("/tmp", "inotifier.pid")
-        
+
         if os.path.exists(pid_file):
             pid = int(open(pid_file).read())
 
@@ -20,7 +21,8 @@ class Command(BaseCommand):
                 os.kill(pid, signal.SIGHUP)
             except OSError:
                 os.remove(pid_file)
-                raise CommandError("No process with id %s was found. The pid file has been removed." % pid)
+                err = "No process with id %d. Removed %s." % (pid, pid_file)
+                raise CommandError(err)
 
             import time
             time.sleep(2)

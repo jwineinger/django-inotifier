@@ -40,11 +40,28 @@ django signal will be issued and can be handled by other apps.
 
 2) Defining your own event processor class
 
-    2.1) See event_processors.py in the inotifier app directory. There are a number of simple 
-    event processors there, plus a more complex one (CreateViaChunksSignaler).
-    
-    2.2) See the documentation for the pyinotify project on how to write an event processor.
+    2.1) Learn about it
 
+        2.1.1) See event_processors.py in the inotifier app directory. There are a number of simple 
+        event processors there, plus a more complex one (CreateViaChunksSignaler).
+        
+        2.1.2) See the documentation for the pyinotify project on how to write an event processor.
+
+    2.2) Create it
+
+        2.2.1) Put your context processor class somewhere accessible by code in your project.
+
+    2.2) Use it
+
+        Once you have defined your class, simply specify it as the class to handle a certain 
+        watch location in your INOTIFIER_WATCH_PATHS setting.
+        
+            For example, assume you added your class to myproject/myapp/event_processors.py as
+        MySuperFunEventProcessor(). If your project is NOT on PYTHONPATH, you would specify the
+        <event processor class> as 'myproject.myapp.event_processors.MySuperFunEventProcessor'.
+        If your project IS on PYTHONPATH, then you would omit 'myproject' from the beginning of 
+        that.
+    
 3) FAQ
 
     3.1) Q: How do I use this on <insert non-linux OS>?

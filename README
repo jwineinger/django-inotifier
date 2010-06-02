@@ -7,11 +7,21 @@ other project.  When configured and running, pyinotify is used to monitor a
 file or directory for changes. When changes are detected, a corresponding 
 django signal will be issued and can be handled by other apps.
 
+Users can also define their own event processor classes which can do anything.
+For instance, instead of sending django signals when certain events occur, the
+event processor could add tasks to a queue or send a request to a web service.
+In this case, the only benefit gained by using this app is the use of
+the management commands which are provided for starting and stopping the
+pyinotify daemon.
+
 1) Quickstart
 
     1.1) Install the inotifier application
 
     1.2) Add inotifier to INSTALLED_APPS
+        -do this so the following management commands will be available:
+            "inotifier_start" - this starts the pyinotify daemon
+            "inotifier_start" - this stops the pyinotify daemon
 
     1.3) Define settings in project settings.py
 
@@ -45,21 +55,26 @@ django signal will be issued and can be handled by other apps.
 
     2.1) Learn about it
 
-        2.1.1) See event_processors.py in the inotifier app directory. There are a number of simple 
+        See the documentation for the pyinotify project on how to write an event processor.
+
+        See event_processors.py in the inotifier app directory. There are a number of simple 
         event processors there, plus a more complex one (CreateViaChunksSignaler).
         
-        2.1.2) See the documentation for the pyinotify project on how to write an event processor.
+        The event processor classes included in this app contain nothing specific to this
+        app, besides the django stuff -- they are just event processors which will work with
+        pyinotify.
 
     2.2) Create it
 
-        2.2.1) Put your context processor class somewhere accessible by code in your project.
+        Put your context processor class somewhere accessible by code in your project. The
+        author's convention is to use myapp/event_processors.py.
 
     2.2) Use it
 
         Once you have defined your class, simply specify it as the class to handle a certain 
         watch location in your INOTIFIER_WATCH_PATHS setting.
         
-            For example, assume you added your class to myproject/myapp/event_processors.py as
+        For example, assume you added your class to myproject/myapp/event_processors.py as
         MySuperFunEventProcessor(). If your project is NOT on PYTHONPATH, you would specify the
         <event processor class> as 'myproject.myapp.event_processors.MySuperFunEventProcessor'.
         If your project IS on PYTHONPATH, then you would omit 'myproject' from the beginning of 
@@ -70,4 +85,3 @@ django signal will be issued and can be handled by other apps.
     3.1) Q: How do I use this on <insert non-linux OS>?
          A: You can't.  inotify is a linux specific feature. Thus, pyinotify and this project
             will only work on linux.
-

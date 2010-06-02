@@ -120,6 +120,7 @@ pyinotify daemon.
 
     Note: All signals are defined with as:
         <signal> = django.dispatch.Signal(providing_args=["event"])
+    where the 'event' argument will be the pyinotify event instance.
 
     in_access
     in_attrib

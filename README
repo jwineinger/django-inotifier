@@ -2,16 +2,18 @@ django-inotifier - a thin django wrapper around pyinotify
 
 Author: Jay Wineinger <jay.wineinger@gmail.com>
 
-This project provides a django pluggable app which provides management
-commands to start and stop the pyinotify daemon. Pyinotify monitors files or
-directories for certain events and allows custom processing when those events
-occur. Because inotify is a linux opearting system feature, pyinotify and this
-project are only useable on systems running linux.
+This project provides a django pluggable app (inotifier) which aims to make
+the use of pyinotify in a django project as easy as possible. Pyinotify
+monitors files or directories for certain events and allows custom processing
+when those events occur. The inotifier app provides management commands to
+start and stop the pyinotify daemon, which can be configured with a single
+required setting.
 
 Users specify a path to monitor, a set of events to watch for, and a class to
 process those events when they occur. Some sample event processor classes are
 included, including ones that send django signals (also defined in this app),
-which other apps can connect to.
+which other apps can connect to. Event processor classes should conform to the
+style directed by the pyinotify project.
 
 Users can also define their own event processor classes which can do anything.
 For instance, instead of sending django signals when certain events occur, the
@@ -19,6 +21,9 @@ event processor could add tasks to a queue or send a request to a web service.
 In this case, the only benefit gained by using this app is the use of
 the management commands which are provided for starting and stopping the
 pyinotify daemon.
+
+Note: Because inotify is a linux opearting system feature, pyinotify and this
+project are only useable and useful on systems running linux.
 
 1) Quickstart
 

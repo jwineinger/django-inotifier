@@ -1,6 +1,7 @@
 import pyinotify
 import signals
 
+
 class AllEventsPrinter(pyinotify.ProcessEvent):
     """
     Simple class which prints on every event.
@@ -49,6 +50,7 @@ class AllEventsPrinter(pyinotify.ProcessEvent):
 
     def process_IN_UNMOUNT(self, event):
         print "IN UNMOUNT: %s" % event.pathname
+
 
 class AllEventsSignaler(pyinotify.ProcessEvent):
     """
@@ -99,12 +101,14 @@ class AllEventsSignaler(pyinotify.ProcessEvent):
     def process_IN_UNMOUNT(self, event):
         signals.in_unmount.send(sender=self, event=event)
 
+
 class CreateSignaler(pyinotify.ProcessEvent):
     """
     Simple class which only signals on create events.
     """
     def process_IN_CREATE(self, event):
         signals.in_create.send(sender=self, event=event)
+
 
 class CreateViaChunksSignaler(pyinotify.ProcessEvent):
     """
@@ -127,13 +131,13 @@ class CreateViaChunksSignaler(pyinotify.ProcessEvent):
     Since we only want to signal when a new file is created, not just when
     a file is moved/renamed, we will use a state-machine to watch the stream
     of events, and only signal when the proper flow has been observed.
-    Watching only the IN_MOVED_TO event would be insufficient because that 
+    Watching only the IN_MOVED_TO event would be insufficient because that
     could be triggered by someone manually renaming a file in the directory.
 
     To accomplish what we want, we will watch the IN_CREATE event and the
-    IN_MOVED_TO event. In the special case of moving a file when both the source
-    and destination directories are being watched, the IN_MOVED_TO event will
-    also have a src_pathname attribute to tell what the original filename
+    IN_MOVED_TO event. In the special case of moving a file when both the
+    source and destination directories are being watched, the IN_MOVED_TO event
+    will also have a src_pathname attribute to tell what the original filename
     was. Since we are only concerned with files created and moved within our
     watched directories, this allows us to track the state from the creation
     of the temporary .part file all the way through moving it to the final
@@ -142,7 +146,7 @@ class CreateViaChunksSignaler(pyinotify.ProcessEvent):
     def my_init(self):
         """
         Setup a dict we can track .part files in.
-        
+
         Also define the max_allowable_age for an entry in the tracking dict.
         """
         self.temp_files = {}

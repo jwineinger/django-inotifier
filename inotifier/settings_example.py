@@ -7,6 +7,7 @@
 import os.path
 PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
 
+
 def generate_watch_paths():
     """
     A simple function to generate an iterable of 3-tuples as the
@@ -36,4 +37,3 @@ INOTIFIER_DAEMON_STDOUT = os.path.join(PROJECT_PATH, 'inotifier_stdout.txt')
 
 # OPTIONAL. Leave undefined if unused
 INOTIFIER_DAEMON_STDERR = os.path.join(PROJECT_PATH, 'inotifier_stderr.txt')
-

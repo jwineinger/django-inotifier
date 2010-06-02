@@ -20,12 +20,15 @@ django signal will be issued and can be handled by other apps.
             -An iterable of 3-tuples:
                 ('/path/to/monitor', <pyinotify event mask>, '<event processor class>')
             -see example in inotifier/settings_example.py
+
         1.3.2) INOTIFIER_DAEMON_STDOUT
             -optional
             -A string path to a file which will be used as stdout for the pyinotify daemon
+
         1.3.3) INOTIFIER_DAEMON_STDERR 
             -optional
             -A string path to a file which will be used as stderr for the pyinotify daemon
+
         1.3.4) PROJECT_PATH
             -optional
             -The path to the main project directory. Used to generate location for the 

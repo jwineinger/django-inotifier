@@ -134,8 +134,8 @@ class CreateViaChunksSignaler(pyinotify.ProcessEvent):
     Watching only the IN_MOVED_TO event would be insufficient because that
     could be triggered by someone manually renaming a file in the directory.
 
-    To accomplish what we want, we will watch the IN_CREATE event and the
-    IN_MOVED_TO event. In the special case of moving a file when both the
+    To accomplish what we want, we will watch the IN_CREATE, IN_MOVED_FROM,
+    and IN_MOVED_TO events. In the special case of moving a file when both the
     source and destination directories are being watched, the IN_MOVED_TO event
     will also have a src_pathname attribute to tell what the original filename
     was. Since we are only concerned with files created and moved within our
@@ -186,6 +186,9 @@ class CreateViaChunksSignaler(pyinotify.ProcessEvent):
         pyinotify, then this event will have a value in src_pathname. This
         value will be the .part filename and event.pathname will be the final
         filename.
+
+        Note: IN_MOVED_FROM must be watched as well for src_pathname to be
+        set.
         """
         if event.src_pathname and event.src_pathname in self.temp_files:
             del self.temp_files[event.src_pathname]
